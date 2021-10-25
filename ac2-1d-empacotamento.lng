@@ -1,0 +1,40 @@
+SETS:
+  ! TEMPO - tempo do comercial;
+  ! b - variavel auxiliar na iteracao Xij;
+  COMERCIAL: TEMPO, b;
+  ! Y - binario se o break esta ou nao sendo usado 
+  Tmax - tempo maximo do break em segundos; 
+  BREAK: Y, Tmax;
+  ! Xij - binario se o comercial i esta ou nao no break j;
+  MATRIZ(COMERCIAL,BREAK): X;
+
+ENDSETS
+
+DATA:
+! 8 breaks inicializados disponiveis; 
+    BREAK          Tmax =
+    b1             300     
+    b2             300     
+    b3             300     
+    b4             300
+    b5             300     
+    b6             300     
+    b7             300     
+    b8             300;
+
+! Tempo de cada um dos 20 comerciais em segundos;
+ TEMPO = 
+  30, 30, 15, 60, 30, 60, 30, 30, 15, 60, 30, 15,
+  15, 30, 60, 15, 30, 60, 30, 15;
+
+X = 1; ! Todos os valores Xij sao iguais a 1;
+b = 1; ! Variavel auxiliar p/ iteraçao de breaks em Xij = 1;
+
+ENDDATA
+
+Min = @SUM( BREAK(j) : Y(j));
+
+@SUM( COMERCIAL(j) : TEMPO(j)*X(j, b)) <= @SUM( BREAK : Tmax*Y);
+
+@FOR( COMERCIAL: @BIN( Y));
+ 

@@ -1,0 +1,71 @@
+MODEL:
+
+SETS:
+   ! X -  variável de decisão, 1 se a rota j for selecionada, 0 caso contrário.
+   CUSTO - o custo associado à rota j.
+   TEMPO - tempo associado a rota j.
+   TIPO - ROTA DE CIDADES (1 e 2->SAINDO DE BH, 
+   2 e 3->SAINDO DE CA, 4 e 5-> SAINDO DE CR)   
+   TMAX - TEMPO MAXIMO DA TRIPULAÇAO DA ROTA ANTES DE TROCAR;
+   ROTAS: X, CUSTO, TEMPO, TIPO, TMAX;
+
+ENDSETS
+
+DATA:
+   ROTAS           CUSTO TEMPO, TIPO =
+    r135             20      12  1
+    r136             16      16  1 
+    r145             17      12  1
+    r146             18      16  1
+    
+    r235             20      10  2
+    r236             13      12  2
+    r245             14      10  2
+    r246             15      12  2
+    
+    r351             20      18  3
+    r352             21      22  3
+    r361             31      18  3
+    r362             15      22  3
+    
+    r451             11      16  4
+    r452             43      18  4
+    r461             54      16  4
+    r462             45      18  4
+    
+    r513             34      12  5
+    r514             23      16  5
+    r523             34      12  5
+    r524             12      16  5
+    
+    r613             34      10  6 
+    r614             11      12  6
+    r623             43      10  6
+    r624             12      12  6; 
+
+TMAX = 24; ! Tempo maximo da triputacao antes de trocar = 8h; 
+
+ENDDATA
+
+MIN = @SUM( ROTAS : CUSTO * X);
+
+@FOR( ROTAS: @BIN( X));
+
+@FOR(ROTAS(r) : 
+  TEMPO(r)*X(r) <= TMAX(r); ! Limtado pelo tempo max da tripulacao;
+);
+
+! Melhor rota unica para cada tipo;
+@SUM( ROTAS | TIPO #EQ# 1: X) = 1;
+
+@SUM( ROTAS | TIPO #EQ# 2: X) = 1;
+
+@SUM( ROTAS | TIPO #EQ# 3: X) = 1;
+
+@SUM( ROTAS | TIPO #EQ# 4: X) = 1;
+
+@SUM( ROTAS | TIPO #EQ# 5: X) = 1;
+
+@SUM( ROTAS | TIPO #EQ# 6: X) = 1;
+
+END

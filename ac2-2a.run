@@ -1,0 +1,7 @@
+reset;
+
+model ac2-2a.mod;
+
+solve;
+
+display x11, x12, x13, x21, x22, x23, x31, x32, x33, z;

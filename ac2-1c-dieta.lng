@@ -1,0 +1,25 @@
+Model:
+
+Data:
+No_de_nutrientes = 3;
+enddata
+
+sets:
+comida/1..5/:gosto, x, custo; ! 5 comidas c/ restricao de gosto;
+nutriente/1..No_de_nutrientes/:q; ! 2 nutrientes ;
+Comida_nutriente_content(nutriente,comida):c;
+endsets
+
+data:
+custo=25 10 15 34 40; !  comidas;
+q=20 14 25; ! Necessidade de nutrientes;
+c=1 0 1 1 2
+ 0 1 2 1 1
+ 2 2 1 2 1;
+gosto = 0, 0, 1, 1, 0; ! Vetor de gostos para cada comida;
+enddata
+
+min=@sum(comida(i):custo(i)*x(i)*gosto(i));
+@for(nutriente(j):@sum(comida(i): c(j,i)*x(i)*gosto(i))>=q(j));
+
+end

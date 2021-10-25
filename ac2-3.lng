@@ -1,0 +1,30 @@
+MODEL:
+
+ DATA:
+
+    ! Número de unidades estocadas 2000 ou 4000;
+    Q = 2000;
+
+    !M edia da demanda (7000 + 8000 + 5000 + 8000)/4;
+    MU = 7000;
+
+    ! Custo de faltar uma unidade (falta);
+    Cu = 20;
+
+    ! Custo de uma unidade de estoque não vendida (excesso);
+    Co = 10;
+
+ ENDDATA
+
+ ! Equacao p/ obter a demanda D minimizada esperada
+   No lado esquerdo funcao probabilidade cumulativa <= Razao Critica
+   No lado direito a razao critica;
+  @PPS( MU, D) = Cu / ( Cu + Co);
+
+  ! Quantidade que deve ser impressa Qx;
+  C = D - Q;
+
+ ! Lucro esperado;
+  Lucro = Cu * MU - Co * (D - MU) - (Cu + Co) * @PPL(MU, D);
+
+END

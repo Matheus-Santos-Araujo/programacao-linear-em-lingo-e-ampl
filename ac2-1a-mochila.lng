@@ -1,0 +1,64 @@
+MODEL:
+
+SETS:
+   ITEMS: INCLUDE, WEIGHT, RATING, COMPART;
+ENDSETS
+
+DATA:
+   ITEMS          WEIGHT RATING, COMPART =
+    ANT_REPEL        1      2      1
+    BEER             3      9      1
+    BLANKET          4      3      3 
+    BRATWURST        3      8      2
+    BROWNIES         3     10      4
+    FRISBEE          1      6      3
+    SALAD            5      4      1
+    WATERMELON      10     10      4
+    BANANA           2      8      5
+    PIZZA            5     10      6
+    HOTDOG           4      3      6
+    FISH             6      2      5
+    CHICKEN          9      8      2;
+
+! Capacidades dos compartimentos;
+    CP1 = 17;      
+    CP2 = 14;      
+    CP3 = 12;      
+    CP4 = 16;      
+    CP5 = 16;     
+    CP6 = 18;
+
+ENDDATA
+
+MAX = @SUM( ITEMS: RATING * INCLUDE);
+
+! Verificar limites dos compartimentos;
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP1:
+     @SUM( ITEMS ( I): WEIGHT( I) * INCLUDE( I)) <= 17;
+  );
+
+
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP2:
+    @SUM( ITEMS ( I): WEIGHT( I) * INCLUDE( I)) <= 14;
+  );
+
+
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP3:
+     @SUM( ITEMS ( I):WEIGHT( I) * INCLUDE( I)) <= 12;
+  );
+
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP4:
+     @SUM( ITEMS: WEIGHT( I) * INCLUDE( I)) <= 16;
+  );
+
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP5:
+     @SUM( ITEMS ( I): WEIGHT( I) * INCLUDE( I)) <= 16;
+  );
+
+ @FOR( ITEMS( I) | COMPART( I) #EQ# CP6:
+     @SUM( ITEMS ( I): WEIGHT( I) * INCLUDE( I)) <= 18;
+  );
+
+@FOR( ITEMS: @BIN( INCLUDE));
+
+END

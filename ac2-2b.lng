@@ -1,0 +1,7 @@
+x >= 0; ! disjuntores 25A; 
+y >= 0; ! disjuntores 50A;
+
+x <= 100000; ! disjuntores 25A; 
+y <= 100000; ! disjuntores 50A;
+
+Max = 28 - 0.75*x + 36 - 0.28*y - 1.45*x*x*x*y*y + 1.25*x - y;

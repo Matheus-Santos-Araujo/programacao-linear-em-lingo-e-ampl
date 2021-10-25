@@ -1,0 +1,10 @@
+reset;
+
+model ac2-2b.mod;
+
+data ac2-2b.dat;
+
+solve;
+
+display _varname, _var; 
+display _objname, _obj; 

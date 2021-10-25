@@ -1,0 +1,11 @@
+reset;
+
+model ac2-e1e2.mod;
+
+data ac2-e1e2.dat;
+
+expand z, R1, R2;
+
+solve;
+
+display X, z;
